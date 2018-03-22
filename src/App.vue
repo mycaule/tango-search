@@ -27,7 +27,7 @@
             <template slot-scope="{ result }">
               <h5>
                 <ais-highlight :result="result" attribute-name="name"></ais-highlight>
-                ({{ result.date.weekday }} {{ result.date.day }}, {{result.price}} €)
+                ({{ result.date.weekday }} {{ result.date.day }}, {{result.price}}€)
               </h5>
             </template>
           </ais-results>

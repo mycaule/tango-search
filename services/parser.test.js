@@ -64,5 +64,5 @@ test('nameTime parser', t => {
 test('stringParse should parse dates', t => {
   t.is(parser.date('abcd'), null)
 
-  t.deepEqual(parser.date('mercredi 14 juin 2017'), {weekday: 'mercredi', day: 14, month: 6, year: 2017, timestamp: 1497391200})
+  t.deepEqual(parser.date('mercredi 14 juin 2017'), {weekday: 'mercredi', day: 14, month: 6, year: 2017, timestamp: 1497398400})
 })

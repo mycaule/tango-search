@@ -97,7 +97,7 @@ const date = str => {
   const day = parseInt(arr[1], 10)
   const month = map.get(arr[2])
   const year = parseInt(arr[3], 10)
-  const timestamp = new Date(year, month - 1, day) / 1000
+  const timestamp = new Date(Date.UTC(year, month - 1, day)) / 1000
 
   if (arr.length === 4) {
     return {
