@@ -2,33 +2,37 @@
   <ais-index
     app-id="BO057QIXYN"
     api-key="45c9e8d9a8eecb029dc8ef6b0916e719"
-    index-name="coins"
+    index-name="tango"
   >
     <div class="container">
       <div class="columns">
         <div class="column col-12">
-          <ais-search-box></ais-search-box>
         </div>
       </div>
       <div class="columns">
-        <div class="column col-2">Filters
-          <ais-range-input
-            attribute-name="price"
-          />
+        <div class="column col-4">
+          <ais-search-box></ais-search-box>
+
+          <h5>Venue</h5>
+          <ais-refinement-list attribute-name="name" limit="100"></ais-refinement-list>
+
+          <h5>Day</h5>
+          <ais-refinement-list attribute-name="date.weekday" limit="100"></ais-refinement-list>
+
+          <h5>Price</h5>
+          <ais-range-input attribute-name="price"/>
         </div>
-        <div class="column col-10">
+        <div class="column col-8">
           <ais-results>
             <template slot-scope="{ result }">
               <h5>
                 <ais-highlight :result="result" attribute-name="name"></ais-highlight>
-                ({{ result.symbol }})
+                ({{ result.date.weekday }} {{ result.date.day }}, {{result.price}} €)
               </h5>
             </template>
           </ais-results>
         </div>
       </div>
-
-      <ais-menu :attribute="symbol"></ais-menu>
 
     </div>
 

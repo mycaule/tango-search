@@ -1,14 +1,25 @@
-const axios = require('axios')
-const cheerio = require('cheerio')
+/* eslint new-cap: "off" */
 
-const _ = require('lodash')
-
-const parser = require('./string-parser')
+import axios from 'axios'
+import cheerio from 'cheerio'
+import _ from 'lodash'
+import {struct} from 'superstruct'
+import parser from './parser'
 
 const tango = axios.create({
   baseURL: 'http://tango-argentin.fr',
   timeout: 3000
 })
+
+const Events = struct([
+  {
+    name: 'string',
+    date: {weekday: 'string', day: 'number', month: 'number', year: 'number', timestamp: 'number'},
+    time: {begin: 'string', end: 'string'},
+    location: {address: 'string', city: 'string', postcode: 'number'},
+    price: 'number'
+  }
+])
 
 const LINEBREAK = '\n'
 const SEPARATOR = '-------'
@@ -25,7 +36,7 @@ const parse = str => {
         if (nameTime && addressPrices) {
           return {
             name: nameTime.name,
-            date: k,
+            date: parser.date(k),
             time: nameTime.time,
             location: addressPrices.location,
             price: addressPrices.price
@@ -39,7 +50,7 @@ const parse = str => {
       .value()
   })
 
-  return resObj
+  return Events([].concat(...Object.values(resObj)))
 }
 
 const cleanList = text => {
@@ -63,21 +74,11 @@ const cleanList = text => {
 const scrape = city =>
   tango.get(`/${city}`).then(res => {
     const $ = cheerio.load(res.data)
-    const list = parse(cleanList($('table td').text()))
-
-    return {
-      status: 200,
-      list,
-      err: null
-    }
+    return parse(cleanList($('table td').text()))
   }).catch(err => {
     return {
-      status: 500,
       err
     }
   })
 
-module.exports = {
-  scrape,
-  parse
-}
+export default {scrape, parse}

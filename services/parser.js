@@ -1,14 +1,7 @@
-module.exports = {
-  nameTime: nameTimeParser,
-  addressPrices: addressPricesParser,
-  date: dateParser,
-  dayList: dayListParser
-}
-
-const LINEBREAK = '\n'
 const SEPARATOR = '-------'
+const LINEBREAK = '\n'
 
-function dayListParser(str) {
+const dayList = str => {
   const resObj = {}
 
   const re10 = new RegExp(`${SEPARATOR + LINEBREAK}.*?${LINEBREAK + LINEBREAK}`, 'g')
@@ -29,7 +22,7 @@ function dayListParser(str) {
   return resObj
 }
 
-function nameTimeParser(str) {
+const nameTime = str => {
   const re = /\d\d:\d\d.*/i
   const found = str.match(re)
 
@@ -46,8 +39,13 @@ function nameTimeParser(str) {
   }
   return null
 }
+const price = str => {
+  const tmp = str.match(/\d+/g)
+  const prices = tmp === null ? [0] : tmp.map(Number)
+  return Math.max(...prices)
+}
 
-function addressPricesParser(str) {
+const addressPrices = str => {
   const re1 = /Entrée.*/i
   const found1 = str.match(re1)
 
@@ -59,11 +57,11 @@ function addressPricesParser(str) {
 
     if (found2) {
       return {
-        price: found1[0].trim(),
+        price: price(found1[0].trim()),
         location: {
           address: location.slice(0, found2.index + 1).trim(),
           city: location.slice(found2.index + found2[0].length).trim(),
-          postcode: found2[0].replace(/\D/g, '')
+          postcode: parseInt(found2[0].replace(/\D/g, ''), 10)
         }
       }
     }
@@ -77,16 +75,40 @@ function addressPricesParser(str) {
   return null
 }
 
-function dateParser(str) {
+const date = str => {
   const arr = str.split(' ')
+
+  const map = new Map([
+    ['janvier', 1],
+    ['fevrier', 2],
+    ['mars', 3],
+    ['avril', 4],
+    ['mai', 5],
+    ['juin', 6],
+    ['juillet', 7],
+    ['aout', 8],
+    ['septembre', 9],
+    ['octobre', 10],
+    ['novembre', 11],
+    ['decembre', 12]
+  ])
+
+  const weekday = arr[0]
+  const day = parseInt(arr[1], 10)
+  const month = map.get(arr[2])
+  const year = parseInt(arr[3], 10)
+  const timestamp = new Date(year, month - 1, day) / 1000
 
   if (arr.length === 4) {
     return {
-      weekday: arr[0],
-      day: parseInt(arr[1], 10),
-      month: arr[2],
-      year: parseInt(arr[3], 10)
+      weekday,
+      day,
+      month,
+      year,
+      timestamp
     }
   }
   return null
 }
+
+export default {nameTime, addressPrices, date, dayList}
