@@ -1,7 +1,8 @@
-import Vue from 'vue'
-import App from './App.vue'
+/* eslint-disable no-new */
 
-import { Index, SearchBox, Results, Pagination, Highlight, Menu, RangeInput } from 'vue-instantsearch';
+import Vue from 'vue'
+import {Index, SearchBox, Results, Pagination, Highlight, Menu, RangeInput} from 'vue-instantsearch'
+import App from './App.vue'
 
 Vue.component('ais-index', Index)
 Vue.component('ais-search-box', SearchBox)
