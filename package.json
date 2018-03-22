@@ -1,5 +1,5 @@
 {
-  "name": "vue-instantsearch-getting-started",
+  "name": "tango-search",
   "description": "A Vue.js project",
   "version": "1.0.0",
   "license": "MIT",
@@ -32,7 +32,7 @@
     "file-loader": "^1.1.4",
     "lodash": "^4.17.5",
     "superstruct": "^0.5.1",
-    "vue-loader": "^13.0.5",
+    "vue-loader": "^14.2.1",
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1",
