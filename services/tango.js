@@ -14,6 +14,7 @@ const tango = axios.create({
 const Events = struct([
   {
     name: 'string',
+    tags: ['string'],
     date: {weekday: 'string', day: 'number', month: 'number', year: 'number', timestamp: 'number'},
     time: {begin: 'string', end: 'string'},
     location: {address: 'string', city: 'string', postcode: 'number'},
@@ -36,6 +37,7 @@ const parse = str => {
         if (nameTime && addressPrices) {
           return {
             name: nameTime.name,
+            tags: nameTime.tags,
             date: parser.date(k),
             time: nameTime.time,
             location: addressPrices.location,

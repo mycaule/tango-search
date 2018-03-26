@@ -44,6 +44,7 @@ test('addressPrices parser', t => {
 test('nameTime parser', t => {
   t.deepEqual(parser.nameTime('Flor Nocturna Menilmontant 21:00 à 00:00'), {
     name: 'Flor Nocturna Menilmontant',
+    tags: ['milonga'],
     time: {
       begin: '21:00',
       end: '00:00'
@@ -51,7 +52,8 @@ test('nameTime parser', t => {
   })
 
   t.deepEqual(parser.nameTime('Pratique la Ruche22:15 à 01:00'), {
-    name: 'Pratique la Ruche',
+    name: 'La Ruche',
+    tags: ['practica'],
     time: {
       begin: '22:15',
       end: '01:00'

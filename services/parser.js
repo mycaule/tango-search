@@ -1,3 +1,5 @@
+import voca from 'voca'
+
 const SEPARATOR = '-------'
 const LINEBREAK = '\n'
 
@@ -29,8 +31,11 @@ const nameTime = str => {
   if (found) {
     const times = found[0].split(' à ')
 
+    const tags = voca.matches(str, /.*(practica|pratica|pratique).*/i) ? ['practica'] : ['milonga']
+
     return {
-      name: str.slice(0, found.index).trim(),
+      name: voca.chain(str).slice(0, found.index).replaceAll(/(milonga|practica|pratica|pratique|afterwork)(\s(des|du|de)){0,1}/i, '').trim().capitalize().value(),
+      tags,
       time: {
         begin: times[0].trim(),
         end: times[1].trim()
