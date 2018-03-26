@@ -10,6 +10,7 @@
     "test": "xo && ava --verbose"
   },
   "dependencies": {
+    "algoliasearch": "^3.26.0",
     "vue": "^2.5.11",
     "vue-instantsearch": "^1.5.2"
   },

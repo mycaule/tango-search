@@ -1,7 +1,6 @@
 import test from 'ava'
+import algoliasearch from 'algoliasearch'
 import tango from './tango'
-
-const fs = require('fs')
 
 const sample = require('./result-sample.json').text
 
@@ -13,6 +12,13 @@ test('parse text to JSON', t => {
 test('scrape', async t => {
   const data = await tango.scrape('paris')
 
-  fs.writeFileSync('events.json', JSON.stringify(data))
+  const algolia = algoliasearch('BO057QIXYN', process.env.ALGOLIA_API_KEY)
+  const index = algolia.initIndex('tango')
+
+  const t1 = await index.clearIndex()
+  const t2 = await index.addObjects(data)
+
+  console.log('Updating Algolia index...', t1.updatedAt)
   t.is(data.length > 300, true)
+  t.is(data.length, t2.objectIDs.length)
 })

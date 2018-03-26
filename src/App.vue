@@ -25,10 +25,8 @@
         <div class="column col-8">
           <ais-results>
             <template slot-scope="{ result }">
-              <h5>
-                <ais-highlight :result="result" attribute-name="name"></ais-highlight>
-                ({{ result.date.weekday }} {{ result.date.day }}, {{result.price}}€)
-              </h5>
+              <h5><ais-highlight :result="result" attribute-name="name"></ais-highlight></h5>
+              <h6>{{ result.date.weekday }} {{ result.date.day }} {{result.price}}€</h6>
             </template>
           </ais-results>
         </div>
