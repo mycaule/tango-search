@@ -1,38 +1,52 @@
 <template>
-  <ais-index
-    app-id="BO057QIXYN"
-    api-key="45c9e8d9a8eecb029dc8ef6b0916e719"
-    index-name="tango"
-  >
+  <ais-index app-id="BO057QIXYN" api-key="45c9e8d9a8eecb029dc8ef6b0916e719" index-name="tango">
     <div class="container">
-      <ais-search-box></ais-search-box>
       <div class="columns">
         <div class="column col-3">
-          <div class="form-group">
-            <label class="form-label" for="weekday">Jour</label>
-            <ais-refinement-list attribute-name="date.weekday" id="weekday"></ais-refinement-list>
-          </div>
+          <ul class="menu">
+            <!-- menu header text -->
+            <li class="divider" data-content="JOUR"></li>
+            <li class="menu-item">
+              <ais-refinement-list attribute-name="date.weekday"></ais-refinement-list>
+            </li>
 
-          <div class="form-group">
-            <label class="form-label" for="tags">Type</label>
-            <ais-refinement-list attribute-name="tags" id="tags"></ais-refinement-list>
-          </div>
+            <li class="divider" data-content="TYPE"></li>
+            <li class="menu-item">
+              <ais-refinement-list attribute-name="tags"></ais-refinement-list>
+            </li>
 
-          <div class="form-group">
-            <label class="form-label" for="price">Prix</label>
-            <ais-range-input attribute-name="price" id="price"/>
-          </div>
+            <li class="divider" data-content="PRIX"></li>
+            <li class="menu-item">
+              <ais-range-input attribute-name="price"/>
+            </li>
 
-          <div class="form-group">
-            <label class="form-label" for="venue">Lieu</label>
-            <ais-refinement-list attribute-name="name" id="venue" limit="30"></ais-refinement-list>
-          </div>
+            <li class="divider" data-content="LIEU"></li>
+            <li class="menu-item">
+              <ais-refinement-list attribute-name="name" limit="30"></ais-refinement-list>
+            </li>
+
+            <li class="divider"></li>
+            <li class="menu-item">
+              <ais-powered-by></ais-powered-by>
+            </li>
+          </ul>
         </div>
         <div class="column col-8">
+          <ais-search-box>
+            <div class="input-group">
+              <ais-input placeholder="Chercher un évènement" :classNames="{'ais-input': 'form-input'}"/>
+              <ais-clear :classNames="{'ais-clear': 'btn btn-default'}">
+                <span class="icon icon-stop" aria-hidden="true"></span>
+              </ais-clear>
+              <button class="btn btn-primary input-group-btn" type="submit">
+                <span class="icon icon-search" aria-hidden="true"></span>
+              </button>
+            </div>
+          </ais-search-box>
           <ais-results class="columns">
             <template slot-scope="{ result }">
               <div class="column col-4">
-                <div class="card">
+                <div class="card bg-gray">
                   <div class="card-header">
                     <div class="card-title h5"><ais-highlight :result="result" attribute-name="name"></ais-highlight></div>
                     <div class="card-subtitle text-gray">
@@ -47,8 +61,8 @@
             </template>
           </ais-results>
 
+
           <ais-pagination :padding="2"></ais-pagination>
-          <ais-powered-by></ais-powered-by>
         </div>
       </div>
     </div>

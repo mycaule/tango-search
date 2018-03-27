@@ -34,7 +34,7 @@ const nameTime = str => {
     const tags = voca.matches(str, /.*(practica|pratica|pratique).*/i) ? ['practica'] : ['milonga']
 
     return {
-      name: voca.chain(str).slice(0, found.index).replaceAll(/(milonga|practica|pratica|pratique|afterwork)(\s(des|du|de)){0,1}/i, '').trim().capitalize().value(),
+      name: voca.chain(str).slice(0, found.index).replaceAll(/(milonga|practica|pratica|pratique|afterwork|menilmontant)(\s(des|du|de)){0,1}/i, '').trim().capitalize().value(),
       tags,
       time: {
         begin: times[0].trim(),
