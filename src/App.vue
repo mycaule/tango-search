@@ -1,5 +1,6 @@
 <template>
-  <ais-index app-id="BO057QIXYN" api-key="45c9e8d9a8eecb029dc8ef6b0916e719" index-name="tango">
+  <ais-index app-id="BO057QIXYN" api-key="45c9e8d9a8eecb029dc8ef6b0916e719" index-name="tango"
+  :query-parameters="{'page': page}">
     <div class="container">
       <div class="columns">
         <div class="column col-3">
@@ -22,7 +23,7 @@
 
             <li class="divider" data-content="LIEU"></li>
             <li class="menu-item">
-              <ais-refinement-list attribute-name="name" limit="30"></ais-refinement-list>
+              <ais-refinement-list attribute-name="name" :limit=15></ais-refinement-list>
             </li>
 
             <li class="divider"></li>
@@ -43,7 +44,7 @@
               </button>
             </div>
           </ais-search-box>
-          <ais-results class="columns">
+          <ais-results class="columns" :stack="true">
             <template slot-scope="{ result }">
               <div class="column col-4">
                 <div class="card bg-gray">
@@ -54,15 +55,14 @@
                   </div>
                   <div class="card-footer">
                     <b>{{result.date.weekday}} {{result.date.day}} {{toMonth(result.date.month)}}</b><br>
-                    <b><a target="_blank" :href="`https://www.google.com/calendar/render?action=TEMPLATE&text=${result.name}&dates=${beginDate(result)}/${endDate(result)}&details=${result.price} euros&location=${result.location.address}, ${result.location.postcode} ${result.location.city}, France&sf=true&output=xml`">{{result.time.begin}}</a></b>
+                    <b><a target="_blank" :href="`https://www.google.com/calendar/render?action=TEMPLATE&text=${result.name}&dates=${formatDate(result.date, result.time.begin)}/${formatDate(result.date, result.time.end)}&details=${result.price} euros&location=${result.location.address}, ${result.location.postcode} ${result.location.city}, France&sf=true&output=xml`">{{result.time.begin}}</a></b>
                   </div>
                 </div>
               </div>
             </template>
           </ais-results>
 
-
-          <ais-pagination :padding="2"></ais-pagination>
+          <div v-observe-visibility="loadMore"></div>
         </div>
       </div>
     </div>
@@ -74,10 +74,16 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
+      page: 1,
       toMonth,
-      beginDate,
-      endDate
+      formatDate
+    }
+  },
+  methods: {
+    loadMore(isVisible) {
+      if (isVisible) {
+        this.page++
+      }
     }
   }
 }
@@ -97,19 +103,10 @@ const toMonth = (num) => (num === 1) ? 'janvier' :
 
 // -TODO smart date like yesterday, today, tomorrow...
 
-const beginDate = (res) => {
-  const date = res.date
-  const time = res.time.begin.split(':')
+const formatDate = (date, time) => {
+  const timeA = time.split(':')
 
-  const dateJS = new Date(date.year, date.month-1, date.day, time[0], time[1])
-  return dateJS.toISOString().replace(/(\.000|:|-)/g,'')
-}
-
-const endDate = (res) => {
-  const date = res.date
-  const time = res.time.end.split(':')
-
-  const dateJS = new Date(date.year, date.month-1, (time[0][0] === '0') ? date.day + 1 : date.day, time[0], time[1])
+  const dateJS = new Date(date.year, date.month-1, (timeA[0][0] === '0') ? date.day + 1 : date.day, timeA[0], timeA[1])
   return dateJS.toISOString().replace(/(\.000|:|-)/g,'')
 }
 </script>
@@ -140,5 +137,20 @@ li {
 
 a {
   color: #42b983;
+}
+
+.card {
+  margin: 3px;
+}
+
+.menu {
+  margin-top: 90px;
+  width: 400px;
+  position: fixed;
+}
+
+.input-group {
+  margin-top: 40px;
+  margin-bottom: 10px;
 }
 </style>
