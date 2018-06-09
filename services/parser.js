@@ -91,7 +91,7 @@ const date = str => {
     ['mai', 5],
     ['juin', 6],
     ['juillet', 7],
-    ['aout', 8],
+    ['août', 8],
     ['septembre', 9],
     ['octobre', 10],
     ['novembre', 11],
