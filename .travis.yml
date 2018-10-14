@@ -4,7 +4,7 @@ node_js:
 
 before_install:
   - sudo apt-get install -y w3m
-  - w3m -dump -cols 2000 https://tango-argentin.fr/paris |grep '2018\|2019\|Entrée' |sed 's/Transparent\|En savoir plus//g' |awk '{$1=$1};1' |sed 's/ - de /,/g; s/ à \([0-9]*:[0-9]*\) /,\1,/g; s/ Entrée /,/g; s/\.$//g; s/\(.* 2018\)/\n\1/g'
+  - w3m -dump -cols 2000 https://tango-argentin.fr/paris |grep '2018\|2019\|Entrée' |sed 's/Transparent\|En savoir plus\|Steps//g' |awk '{$1=$1};1' |sed 's/ - de /,/g; s/ à \([0-9]*:[0-9]*\) /,\1,/g; s/ Entrée /,/g; s/\.$//g; s/\(.* 2018\)/\n\1/g'
 addons:
   apt:
     update: true
