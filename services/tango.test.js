@@ -22,9 +22,9 @@ test('scrape', async t => {
   // t.is(data.length > 100, true)
   // t.is(data.length, t2.objectIDs.length)
   
-  index.addObjects(contactsJSON, function(err, content) {
-    if (err) {
-      console.error(err);
+  index.addObjects(data, function(error, content) {
+    if (error) {
+      console.error(error);
     } else {
       console.log('Updating Algolia index...', t1.updatedAt)
       t.is(data.length > 100, true)
