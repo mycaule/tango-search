@@ -17,14 +17,13 @@ test('scrape', async t => {
 
   const t1 = await index.clearIndex()
   
-  // FIXME- async await syntax broken
+  // -FIXME- async await syntax broken
   // const t2 = await index.addObjects(data)
-  // 
   // console.log('Updating Algolia index...', t1.updatedAt)
   // t.is(data.length > 100, true)
   // t.is(data.length, t2.objectIDs.length)
   
-  index.addObjects(data, function(error, content) {
+  index.addObjects(data, (error, content) => {
     if (error) {
       console.error(error);
     } else {
