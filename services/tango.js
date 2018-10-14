@@ -77,9 +77,9 @@ const scrape = city =>
   tango.get(`/${city}`).then(res => {
     const $ = cheerio.load(res.data)
     return parse(cleanList($('table td').text()))
-  }).catch(err => {
+  }).catch(error => {
     return {
-      err
+      error
     }
   })
 
