@@ -25,7 +25,7 @@ test('scrape', async t => {
   
   index.addObjects(data, (error, content) => {
     if (error) {
-      console.error(error);
+      console.error(error)
     } else {
       console.log('Updating Algolia index...', t1.updatedAt)
       t.is(data.length > 100, true)
