@@ -15,7 +15,7 @@ const Events = struct([
   {
     name: 'string',
     tags: ['string'],
-    date: {weekday: 'string', day: 'number', month: 'number', year: 'number', timestamp: 'number'},
+    date: {weekday: 'string?', day: 'number?', month: 'number?', year: 'number?', timestamp: 'number?'},
     time: {begin: 'string', end: 'string'},
     location: {address: 'string', city: 'string', postcode: 'number'},
     price: 'number'
@@ -77,9 +77,9 @@ const scrape = city =>
   tango.get(`/${city}`).then(res => {
     const $ = cheerio.load(res.data)
     return parse(cleanList($('table td').text()))
-  }).catch(err => {
+  }).catch(error => {
     return {
-      err
+      error
     }
   })
 
