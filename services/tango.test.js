@@ -23,6 +23,8 @@ test('scrape', async t => {
   // t.is(data.length > 100, true)
   // t.is(data.length, t2.objectIDs.length)
 
+  console.log(data)
+
   index.addObjects(data, (error, content) => {
     if (error) {
       console.error(error)
