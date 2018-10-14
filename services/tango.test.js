@@ -16,9 +16,19 @@ test('scrape', async t => {
   const index = algolia.initIndex('tango')
 
   const t1 = await index.clearIndex()
-  const t2 = await index.addObjects(data)
-
-  console.log('Updating Algolia index...', t1.updatedAt)
-  t.is(data.length > 100, true)
-  t.is(data.length, t2.objectIDs.length)
+  //const t2 = await index.addObjects(data)
+  
+  // console.log('Updating Algolia index...', t1.updatedAt)
+  // t.is(data.length > 100, true)
+  // t.is(data.length, t2.objectIDs.length)
+  
+  index.addObjects(contactsJSON, function(err, content) {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log('Updating Algolia index...', t1.updatedAt)
+      t.is(data.length > 100, true)
+      t.is(data.length, content.objectIDs.length)
+    }
+  })
 })
